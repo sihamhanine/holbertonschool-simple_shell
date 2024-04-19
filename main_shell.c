@@ -6,16 +6,33 @@
  *
  * Description: this program create a basic shell
  * accepting and executing command entered by the user
- * @ac: number of arguments passed in input
- * @av: list of string entred
- * @env: variable environment of string
+ * 
  * Return: Always 0
  */
-int main(int ac, char **av, char **env)
+int main(void)
 {
-while (ac == 1)
+  char *input = NULL, **args = NULL;
+  size_t input_size = 0;
+  ssize_t n_char;
+while (1)
 {
-read_input(av, env);
-}
-return (0);
+  if (isatty(STDIN_FILENO))
+    {
+      printf("cisfun$ ");
+    }
+  n_char = getline(&input, &input_size, stdin);
+  if (n_char == -1)
+    {
+      free(input);
+      exit(EXIT_FAILURE);
+    }
+  if (input[n_char - 1] == '\n')
+    input[n_char - 1] == '\0';
+  if (check_spaces_tabs(input))
+    {
+      free(input);
+      exit(EXIT_FAILURE);
+    }
+ }
+ return (0);
 }

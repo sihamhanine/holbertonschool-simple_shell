@@ -33,6 +33,19 @@ while (1)
       free(input);
       exit(EXIT_FAILURE);
     }
+  args = split_string(input);
+  if (strcmp(args[0], "exit") == 0)
+    {
+      free_input_command(args);
+      free(input);
+      exit(0);
+    }
+  else if (strcmp(args[0], "env") == 0)
+	{
+		printenv();
+		free_input_command(args);
+		exit(EXIT_FAILURE);
+	}
  }
  return (0);
 }

@@ -1,4 +1,6 @@
 #include "shell.h"
+#include <stdlib.h>
+#include <stddef.h>
 /**
  * split_string - Function that split an input string into
  * an array of arguments

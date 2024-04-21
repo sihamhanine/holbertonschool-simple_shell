@@ -8,7 +8,7 @@
 void free_token_command(char **token)
 {
   int i = 0;
-  while (token[i] != NULL)*
+  while (token[i] != NULL)
     {
       free(token[i]);
       i++;

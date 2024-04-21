@@ -20,12 +20,11 @@ char **split_string(char *input)
 
 	while (token != NULL)
 	{
-		args = (char **)realloc(args, (i + 1) * sizeof(char *));
+		args = (char **)realloc(args, (i + 2) * sizeof(char *));
 		if (args == NULL)
 		  {
 		    perror("allocation non reussi");
 		    free_token_command(args);
-		    free(token);
 		    exit(EXIT_FAILURE);
 		  }
 		
@@ -34,7 +33,6 @@ char **split_string(char *input)
 		  {
 		    perror("allocation non reussi");
 		    free_token_command(args);
-		    free(token);
 		    exit(EXIT_FAILURE);
 		  }
 	       _strcpy(args[i], token);

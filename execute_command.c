@@ -7,32 +7,33 @@
  */
 int execute_command(char *command, char **args)
 {
-  int status = -1;
-  pid_t pid;
-  void(command);    
-    if (!find_command(args))
+    int status;
+    pid_t pid;
+    char *full_path = find_command(command);
+
+    if (full_path == NULL)
     {
-      fprintf(stderr, "%s: Command not found\n", args[0]);
-      free_token_command(args);
-      return (0);
+        fprintf(stderr, "%s: Command not found\n", command);
+        return -1;
     }
 
     pid = fork();
     if (pid == -1)
     {
         perror("fork");
+        free(full_path);
         return -1;
     }
     else if (pid == 0)
     {
-        execve(args[0], args, NULL);
+        execve(full_path, args, NULL);
         perror("execve");
         exit(EXIT_FAILURE);
     }
     else
     {
         waitpid(pid, &status, 0);
-        free_token_command(args);;
+        free(full_path);
         return status;
     }
 }

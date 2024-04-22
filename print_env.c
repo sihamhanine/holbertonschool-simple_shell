@@ -9,6 +9,6 @@ void print_env(void)
 	for (env = environ; *env != NULL; env++)
 	{
 	      
-		printf("%s", *env);
+		printf("%s\n", *env);
 	}
 }

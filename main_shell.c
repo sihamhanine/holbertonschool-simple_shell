@@ -14,7 +14,6 @@ int main(void)
   char *input = NULL, **args = NULL, *command = NULL;
   size_t input_size = 0;
   ssize_t n_char;
-  int status;
 while (1)
 {
   if (isatty(STDIN_FILENO))
@@ -58,10 +57,6 @@ while (1)
 	  execute_command(command);
   }
   
-  if (status == -1)
-    {
-      fprintf(stderr, "command non execute: %s\n", command); 
-    }
   free(command);
   free_token_command(args);
  }

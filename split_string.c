@@ -31,27 +31,20 @@ char **split_string(char *input, char **command)
         if (args == NULL)
         {
             perror("allocation non reussi");
-            free_token_command(args);
-            free(*command);
             exit(EXIT_FAILURE);
         }
 
-        args[i] = (char *)malloc(_strlen(token) + 1);
+        args[i] = strdup(token);
         if (args[i] == NULL)
         {
             perror("allocation non reussi");
-            free_token_command(args);
-            free(*command);
             exit(EXIT_FAILURE);
         }
-        _strcpy(args[i], token);
+        
         token = strtok(NULL, delim);
         i++;
     }
 
     args[i] = NULL;
-    if (*command != NULL) {
-        free(*command);
-    }
     return (args);
 }

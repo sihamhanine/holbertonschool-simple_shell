@@ -54,7 +54,10 @@ while (1)
 		free(command);
 		continue;
 	}
-  status = execute_command(command, args);
+  else {
+	  execute_command(command);
+  }
+  
   if (status == -1)
     {
       fprintf(stderr, "command non execute: %s\n", command); 

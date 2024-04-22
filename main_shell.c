@@ -11,11 +11,10 @@
  */
 int main(void)
 {
-  char *input = NULL, **args = NULL;
+  char *input = NULL, **args = NULL, *command = NULL;
   size_t input_size = 0;
   ssize_t n_char;
   int status;
-  pid_t child_pid;
 while (1)
 {
   if (isatty(STDIN_FILENO))
@@ -34,7 +33,7 @@ while (1)
       free(input);
       continue;
     }
-  args = split_string(input);
+  args = split_string(input, &command);
   if (args == NULL)
     {
       perror("error to split input");
@@ -44,6 +43,7 @@ while (1)
   if (strcmp(args[0], "exit") == 0)
     {
       free_token_command(args);
+      free(command);
       free(input);
       exit(EXIT_SUCCESS);
     }
@@ -51,30 +51,17 @@ while (1)
 	{
 		print_env();
 		free_token_command(args);
+		free(command);
 		continue;
 	}
-child_pid = fork();
-if (child_pid == -1)
-{
-  perror("error forking child");
+  status = execute_command(command, args);
+  if (status == -1)
+    {
+      fprintf(stderr, "command non execute: %s\n", command); 
+    }
+  free(command);
   free_token_command(args);
-free(input);
-exit(EXIT_FAILURE);
-}
-if (child_pid == 0)
-{
-args[0] = input;
-if (execve(args[0], args, NULL) == -1)
-{
-printf("%s: No such file or directory\n", args[0]);
- free_token_command(args);
- free(input);
-exit(EXIT_FAILURE);
-}
-}
-else
-wait(&status);
- free_token_command(args);
  }
  return (0);
 }
+  

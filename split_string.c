@@ -9,38 +9,49 @@
  * Return: An array of pointers to the splited arguments,
  * or NULL on failure.
  */
-char **split_string(char *input)
+char **split_string(char *input, char **command)
 {
-	char **args = NULL;
-	char *delim = " \n\t";
-	char *token;
-	int i = 0;
+    char **args = NULL;
+    char *delim = " \n\t";
+    char *token;
+    int i = 0;
 
-	token = strtok(input, delim);
+    token = strtok(input, delim);
+    if (token != NULL) {
+        *command = strdup(token);
+        if (*command == NULL) {
+            perror("allocation non reussi");
+            exit(EXIT_FAILURE);
+        }
+    }
 
-	while (token != NULL)
-	{
-		args = (char **)realloc(args, (i + 2) * sizeof(char *));
-		if (args == NULL)
-		  {
-		    perror("allocation non reussi");
-		    free_token_command(args);
-		    exit(EXIT_FAILURE);
-		  }
-		
-		args[i] = (char *)malloc(_strlen(token) + 1);
-		if (args[i] == NULL)
-		  {
-		    perror("allocation non reussi");
-		    free_token_command(args);
-		    exit(EXIT_FAILURE);
-		  }
-	       _strcpy(args[i], token);
-		token = strtok(NULL, delim);
-		i++;
-	}
+    while (token != NULL)
+    {
+        args = (char **)realloc(args, (i + 2) * sizeof(char *));
+        if (args == NULL)
+        {
+            perror("allocation non reussi");
+            free_token_command(args);
+            free(*command);
+            exit(EXIT_FAILURE);
+        }
 
-	args[i] = NULL;
-	free(token);
-	return (args);
+        args[i] = (char *)malloc(_strlen(token) + 1);
+        if (args[i] == NULL)
+        {
+            perror("allocation non reussi");
+            free_token_command(args);
+            free(*command);
+            exit(EXIT_FAILURE);
+        }
+        _strcpy(args[i], token);
+        token = strtok(NULL, delim);
+        i++;
+    }
+
+    args[i] = NULL;
+    if (*command != NULL) {
+        free(*command);
+    }
+    return (args);
 }

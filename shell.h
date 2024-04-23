@@ -16,5 +16,7 @@ void free_token_command(char **token);
 int check_spaces_tabs(char *input);
 void execute_command(char **argv, char **command, char **env);
 char *find_command(char *command);
+void mode_no_interactif(char **argv, char **env);
+void mode_interactif(char **argv, char **env);
 extern char **environ;
 #endif

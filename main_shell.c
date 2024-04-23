@@ -9,11 +9,13 @@
  * 
  * Return: Always 0
  */
-int main(void)
+int main(int argc, char **argv, char **env)
 {
+  
   char *input = NULL, **args = NULL, *command = NULL;
   size_t input_size = 0;
   ssize_t n_char;
+  (void)argc;
 while (1)
 {
   if (isatty(STDIN_FILENO))
@@ -54,7 +56,7 @@ while (1)
 		continue;
 	}
   else {
-	  execute_command(command);
+	  execute_command(argv, args, env);;
   }
   
   free(command);

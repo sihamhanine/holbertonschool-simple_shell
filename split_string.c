@@ -12,6 +12,7 @@
 char **split_string(char *input, char **command)
 {
     char **args = NULL;
+    int buffer = 100;
     char *delim = " \n\t";
     char *token;
     int i = 0;
@@ -27,7 +28,7 @@ char **split_string(char *input, char **command)
 
     while (token != NULL)
     {
-        args = (char **)realloc(args, (i + 2) * sizeof(char *));
+      args = my_realloc(args, buffer, (i + 2) * sizeof(char *));
         if (args == NULL)
         {
             perror("allocation non reussi");

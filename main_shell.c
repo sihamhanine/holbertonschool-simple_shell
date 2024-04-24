@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
-#include <string.h>
 /**
  * main - The main function for a simple shell program
  *
@@ -9,16 +7,59 @@
  * 
  * Return: Always 0
  */
+
 int main(int argc, char **argv, char **env)
 {
-  (void)argc;
-  if (isatty(STDIN_FILENO))
+   char *input = NULL, **args = NULL, *command = NULL;
+    size_t input_size = 0;
+    ssize_t n_char = 0;
+    int status_return = 1;
+    (void)argc;
+    while (status_return && n_char != EOF)
+      {
+	status_return = isatty(STDIN_FILENO);
+	if (status_return)
     {
-  mode_interactif(argv, env);
+      printf("Cisfun$ ");
     }
-  else
+      n_char = getline(&input, &input_size, stdin);
+      if (n_char == -1)
+	{
+	  perror("erreur lors de lecteur de l'entree\n");
+	  exit(EXIT_FAILURE);
+	}
+      if (check_spaces_tabs(input))
     {
-    mode_no_interactif(argv, env);
+      free(input);
+      continue;
     }
-  return (0);
+  args = split_string(input, &command);
+  if (args == NULL)
+    {
+      perror("error to split input");
+      free(input);
+      continue;
+    }
+  if (strcmp(args[0], "exit") == 0)
+    {
+      free_token_command(args);
+      free(command);
+      free(input);
+      exit(EXIT_SUCCESS);
+    }
+  else if (strcmp(args[0], "env") == 0)
+        {
+print_env();
+                free_token_command(args);
+                free(command);
+		continue;                
+        }
+  else {
+          execute_command(argv, args, env);
+  }
+
+  free(command);
+  free_token_command(args);	  
+    }
+    return (0);
 }

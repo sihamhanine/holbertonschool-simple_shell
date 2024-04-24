@@ -18,7 +18,8 @@ char **split_string(char *input, char **command)
     int i = 0;
 
     token = strtok(input, delim);
-    if (token != NULL) {
+    if (token != NULL)
+      {
         *command = strdup(token);
         if (*command == NULL) {
             perror("allocation non reussi");

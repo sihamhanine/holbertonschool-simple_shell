@@ -34,17 +34,11 @@ void *my_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (NULL);
 	}
       
-	if (new_size > old_size)
-	{
-		for (i = 0; i < old_size; i++)
-			s[i] = ptr1[i];
-	}
-       
-	if (new_size < old_size)
-	{
-		for (i = 0; i < new_size; i++)
-			s[i] = ptr1[i];
-	}
+       for (i = 0; i < old_size && i < new_size; i++)
+	 {
+        s[i] = ptr1[i];
+          }
+
 	free(ptr1);
 	return (s);
 }

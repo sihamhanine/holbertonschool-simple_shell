@@ -14,7 +14,6 @@ int main(int argc, char **argv, char **env)
     size_t input_size = 0;
     ssize_t n_char = 0;
     int status_return = 1;
-    int exit_num = -1;
     int exit_status = EXIT_SUCCESS;
     (void)argc;
     while (status_return && n_char != EOF)
@@ -41,22 +40,13 @@ int main(int argc, char **argv, char **env)
       continue;
     }
   args = split_string(input, &command);
-  if (args == NULL)
-    {
-      perror("error to split input");
-      free(input);
-      free(command);
-      free_token_command(args);
-      continue;
-    }
+  
   
         if (strcmp(args[0], "exit") == 0)
         {
-                if (args[1])
-                        exit_status = atoi(args[1]);
-                else if (exit_num != -1)
-                        exit_status = exit_num;
+                
                 free_token_command(args);
+		free(command);
                 free(input);
                 exit(exit_status);
         }

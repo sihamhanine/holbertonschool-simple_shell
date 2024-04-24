@@ -38,6 +38,8 @@ int main(int argc, char **argv, char **env)
     {
       perror("error to split input");
       free(input);
+      free(command);
+      free_token_command(args);
       continue;
     }
   if (strcmp(args[0], "exit") == 0)
@@ -52,12 +54,13 @@ int main(int argc, char **argv, char **env)
 print_env();
                 free_token_command(args);
                 free(command);
+		free(input);
 		continue;                
         }
   else {
           execute_command(argv, args, env);
   }
-
+  
   free(command);
   free_token_command(args);	  
     }

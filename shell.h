@@ -16,5 +16,6 @@ void execute_command(char **argv, char **command, char **env);
 char *find_command(char *command);
 void *my_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 ssize_t read_input(char **input, size_t *buf_size);
+int check_exit(char **args);
 extern char **environ;
 #endif

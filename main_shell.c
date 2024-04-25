@@ -14,7 +14,7 @@ int main(int argc, char **argv, char **env)
     size_t input_size = 0;
     ssize_t n_char = 0;
     int status_return = 1;
-    int exit_status = EXIT_SUCCESS;
+   
     (void)argc;
     while (status_return && n_char != EOF)
       {
@@ -43,29 +43,35 @@ int main(int argc, char **argv, char **env)
   free(input);
 		input = NULL;
 		if (args == NULL)
+		  {
 			continue;
-  
-        if (strcmp(args[0], "exit") == 0)
-        {
-                
-                free_token_command(args);
-		if (!isatty(STDIN_FILENO))
-	       
-                exit(exit_status);
-		continue;
-        }
-        else if (strcmp(args[0], "env") == 0)
+		  }
+		if (strcmp(args[0], "exit") == 0)
+		{
+		  
+			free_token_command(args);
+			free(command);
+			free(input);
+		   
+				exit(EXIT_SUCCESS);
+			  	
+			continue;
+		}
+		else 
+        
+        if (strcmp(args[0], "env") == 0)
         {
                 print_env();
                 continue;
         }
-  else
-    {
+	else
+	  {
+    
  
           execute_command(argv, args, env);
-    }
+	  }
+	  free(command);  
   
-  free(command);
   free_token_command(args);
   args = NULL;
     }

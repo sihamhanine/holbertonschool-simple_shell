@@ -20,8 +20,8 @@ int _atoi(char *str)
 	}
 	while ((str[i] >= '0') && (str[i] <= '9'))
 	{
-		nbre = (nbre * 10) + (signe * (str[i] - '0'));
+		nbre = (nbre * 10) + (str[i] - '0');
 		i++;
 	}
-	return (nbre);
+	return (nbre * signe);
 }

@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **env)
 {
 	char *input = NULL, *command = NULL, **args = NULL, *line;
 	size_t input_size = 0;
-	int exit_num = -1;
+	int exit_num = -1, exit_status;
 	(void)argc;
 	signal(SIGINT, sigint_handler);
 while (1)
@@ -33,9 +33,16 @@ if (args == NULL)
 line = strtok(NULL, "\n");
 continue;
 }
-if (!check_exit(args, input, exit_num) == 0)
+if (strcmp(args[0], "exit") == 0)
 {
+if (args[1])
+exit_status = _atoi(args[1]);
+else if (exit_num != -1)
+exit_status = exit_num;
+free_token_command(args);
+free(input);
 free(command);
+exit(exit_status);
 }
 else if (strcmp(args[0], "env") == 0)
 print_env();

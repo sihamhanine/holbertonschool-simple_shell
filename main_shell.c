@@ -41,7 +41,7 @@ int main(int argc, char **argv, char **env)
 				  {
 				  
 		if (args[1])
-			exit_status = atoi(args[1]);
+			exit_status = _atoi(args[1]);
 		else if (exit_num != -1)
 			exit_status = exit_num; 
 				       

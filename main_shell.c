@@ -29,7 +29,7 @@ int main(int argc, char **argv, char **env)
 			free(input);
 			break;
 		}
-      if (input[0] == '\0')
+      if (input[0] == '\0' || input == NULL)
 		{
 			free(input);
 			continue;
@@ -40,20 +40,23 @@ int main(int argc, char **argv, char **env)
       continue;
     }
   args = split_string(input, &command);
-  
+  free(input);
+		input = NULL;
+		if (args == NULL)
+			continue;
   
         if (strcmp(args[0], "exit") == 0)
         {
                 
                 free_token_command(args);
-		free(command);
-                free(input);
+		if (!isatty(STDIN_FILENO))
+	       
                 exit(exit_status);
+		continue;
         }
         else if (strcmp(args[0], "env") == 0)
         {
                 print_env();
-                free_token_command(args);
                 continue;
         }
   else
@@ -63,7 +66,8 @@ int main(int argc, char **argv, char **env)
     }
   
   free(command);
-  free_token_command(args);	  
+  free_token_command(args);
+  args = NULL;
     }
     return (0);
 }

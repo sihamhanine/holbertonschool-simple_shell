@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
  * main - The main function for a simple shell program
- * @argc: Nothing.
- * @argv:main program arguments.
- * @env: list of environment variable
+ * @argc: Number of arguments.
+ * @argv: Array of arguments.
+ * @env: List of environment variables.
  * Return: Always 0
  */
 int main(int argc, char **argv, char **env)
@@ -12,13 +12,17 @@ int main(int argc, char **argv, char **env)
 	size_t input_size = 0;
 	ssize_t n_char = 0;
 	(void)argc;
+
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			printf("Cisfun$ ");
 		n_char = getline(&input, &input_size, stdin);
 		if (n_char == -1)
-			free(input), break;
+		{
+			free(input);
+			break;
+		}
 		if (input[n_char - 1] == '\n')
 			input[n_char - 1] = '\0';
 		line = strtok(input, "\n");
@@ -28,14 +32,18 @@ int main(int argc, char **argv, char **env)
 			{
 				args = split_string(line, &command);
 				if (args == NULL)
-					line = strtok(NULL, "\n"), continue;
+				{
+					line = strtok(NULL, "\n");
+					continue;
+				}
 				if (strcmp(args[0], "exit") == 0)
+				{
 					free_token_command(args), free(command), free(input), exit(EXIT_SUCCESS);
-				} else if (strcmp(args[0], "env") == 0)
+				}
+				else if (strcmp(args[0], "env") == 0)
 					print_env();
 				else
-					execute_command(argv, args, env);
-				free_token_command(args), free(command);
+					execute_command(argv, args, env), free_token_command(args), free(command);
 			}
 			line = strtok(NULL, "\n");
 		}

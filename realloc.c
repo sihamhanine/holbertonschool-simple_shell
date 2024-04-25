@@ -8,18 +8,14 @@
  */
 void *my_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *s;
-	char *ptr1;
+	char *s, *ptr1;
 	unsigned int i;
 
 	ptr1 = (char *)ptr;
 	if (ptr == NULL)
 		return (malloc(new_size));
 	if (new_size == 0 && ptr != NULL)
-	{
-		free(ptr);
-		return (NULL);
-	}
+		free(ptr), return (NULL);
 	if (new_size == old_size)
 		return (ptr);
 	s = malloc((new_size) * sizeof(char));

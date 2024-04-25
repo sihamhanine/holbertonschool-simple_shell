@@ -1,1 +1,90 @@
 
+.\"" _simple_shell man page
+
+.TH man 1 "25 April 2024" "" "1.0 simple_shell man page"
+
+.SH NAME
+
+.B simple_shell
+- Simple Shell for Holberton School
+
+.SH SYNOPSIS
+
+.B ./hsh
+[command] [options]
+
+.SH DESCRIPTION
+
+The simple shell (hsh) it's a simple program that contains and executes the basic functions of a shell (bash).
+This shell, like the others, takes keyboard commands and delivers them to the system to be executed.
+Whit this shell you can execute commands like ls for example.
+.br
+
+Shell is a program that takes commands from the keyboard and gives them to the operating system to perform.
+
+
+.SH INVOCATION
+
+hsh  can  be invoked both interactively and non-interactively.
+If hsh is invoked with standard input not connected to a terminal, it reads and executes received commands in order.
+If hsh is invoked with standard input connected to a terminal (determined by isatty(3)), an interactive shell is opened.  
+When executing interactively, hsh displays the prompt "$ " when it is ready to read a command.
+Alternatively, if command line arguments are supplied upon invocation, hsh treats the first argument as a file from which to read commands.
+The supplied file should contain one command per line.  
+.br
+
+.SH Environment
+
+Upon invocation, hsh receives and copies the environment of the parent process in which it was exeucted.  
+This environment is an array of name-value strings describing variables in the format NAME=VALUE.
+.br
+
+.SH Command Execution
+.br
+After receiving a command, split string it into words using " " as a delimiter. 
+The first word is considered the command and all remaining words are considered arguments to that command.  
+hsh then proceeds with the following actions:
+1. If the first character of the command is neither a slash (\) nor dot (.), the shell searches for it in the list of shell builtins.
+If there exists a shell builtin by that name, the builtin is invoked.
+br.
+2. If the first character of the command is none of a slash (\), dot (.), nor builtin, 
+hsh searches each element of the PATH  environmental variable for a directory containing an executable file by that name.
+br.
+3. If the first character of the command is a slash (\) or dot (.) or either of the above searches was successful, 
+the shell executes the named program with any remaining arguments given in a separate execution environment.
+.br
+.SH Builtin commands
+
+.TP
+.br env
+list all environment variablesETURN VALUE
+
+.TP
+.br Exit
+exit the shell
+
+.SH EXAMPLE
+
+#include "main.h"
+
+.B Interactive
+
+      # ./hsh
+      #Cisfun$ ls
+      README.md  check_spaces_tabs.c  execute_command.c  find_command.c  free_token_command.c  hsh  main_shell.c  print_env.c  realloc.c  shell.h  split_string.c
+      #Cisfun$ /bin/ls
+      README.md  check_spaces_tabs.c  execute_command.c  find_command.c  free_token_command.c  hsh  main_shell.c  print_env.c  realloc.c  shell.h  split_string.c
+      #Cisfun$ exit
+      #
+.B Non Interactive
+
+      # echo "/bin/ls" | ./hsh
+      README.md  check_spaces_tabs.c  execute_command.c  find_command.c  free_token_command.c  hsh  main_shell.c  print_env.c  realloc.c  shell.h  split_string.c
+      # echo "ls" | ./hsh
+      README.md  check_spaces_tabs.c  execute_command.c  find_command.c  free_token_command.c  hsh  main_shell.c  print_env.c  realloc.c  shell.h  split_string.c
+      #
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+.SH AUTHOR
+<Soufian Mghirat>
+<Siham Hanine>

@@ -27,4 +27,4 @@ pwd
 /home/soufian/holbertonschool-simple_shell
 
 # Flowchart
-![Flowshart shell](flowchart/Flowchart.png?raw=true)
+![Flowshart shell](https://github.com/sihamhanine/holbertonschool-simple_shell/blob/main/Flowchart/Flowchart.png?raw=true)

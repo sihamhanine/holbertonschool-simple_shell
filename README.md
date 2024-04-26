@@ -24,7 +24,7 @@ It wil then display a simple prompt and wait for commands: $
 ```bash
 pwd 
 ```
-Result : /home/soufian/holbertonschool-simple_shell
+/home/soufian/holbertonschool-simple_shell
 
 # Flowchart
-![SHELL](C:\Users\Soufi\Downloads\Diagramme vierge.png)
+![shell](<Diagramme vierge.png>)

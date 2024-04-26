@@ -10,7 +10,7 @@ int main(int argc, char **argv, char **env)
 {
 	char *input = NULL, *command = NULL, **args = NULL, *line;
 	size_t input_size = 0;
-	int exit_num = -1, exit_status;
+	int exit_num = -1, exit_status = 0;
 	(void)argc;
 	signal(SIGINT, sigint_handler);
 while (1)
